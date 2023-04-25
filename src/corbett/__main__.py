@@ -1,1 +1,4 @@
-print("hello world!")
+from .cli import cli
+
+if __name__ == "__main__":
+    cli()
