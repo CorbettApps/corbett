@@ -20,6 +20,9 @@ class App(BaseModel):
     name: str
     functions = dict()
 
+    # TODO: invoke should load a `Connection` object instead of receiving the decrypted credentials.
+    # It can then validate the API Key Hash from the connection against the API Key provided
+    # by the event, and also decrypt the credentials and pass them to the function.
     def invoke(self, event, context, credentials):
         if 'path' not in event:
             raise Exception("Not a resource")
