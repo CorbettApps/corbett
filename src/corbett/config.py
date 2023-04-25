@@ -6,7 +6,7 @@ try:
 except ImportError:
     pass
 
-_default_env = 'test'
+_default_env = 'prod'
 _default_region = 'us-east-1'
 _base_connection_table_name = '{env}-Connections'
 

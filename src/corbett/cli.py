@@ -39,7 +39,7 @@ available_apps = [
 ]
 
 cli = Group('Corbett')
-apps = Group('apps')
+apps = Group('apps', help="List available and installed apps")
 
 
 @apps.command(name='list')
@@ -126,10 +126,10 @@ def debug():
     """
 
     config_debug = {
-        'api_host': corbett_core.config.api_host,
-        'execute_host': corbett_core.config.execute_host,
-        'namespace': corbett_core.config.snowflake_namespace,
-        'env': corbett_core.config.env
+        'api_host': config.api_host,
+        'execute_host': config.execute_host,
+        'namespace': config.snowflake_namespace,
+        'env': config.env
     }
     print("\nConfig: ")
     for k, v in config_debug.items():
@@ -143,13 +143,15 @@ def debug():
             continue
         print(f'  {k}={v}')
     
-    conn = get_conn()
-    cursor = conn.cursor(DictCursor)
-    snowflake_debug = cursor.execute('select current_role(), current_user(), current_account()').fetchall()[0]
     print("\nSnowflake: ")
-    for k, v in snowflake_debug.items():
-        print(f'  {k}={v}')
-
+    try:
+        conn = get_conn()
+        cursor = conn.cursor(DictCursor)
+        snowflake_debug = cursor.execute('select current_role(), current_user(), current_account()').fetchall()[0]
+        for k, v in snowflake_debug.items():
+            print(f'  {k}={v}')
+    except Exception as err:
+        print(f"   Error: {type(err)} {err}")
 
 
 @cli.command()

@@ -58,10 +58,3 @@ class App(BaseModel):
         wait for the user to finish the oauth flow.
         """
         raise NotImplementedError
-
-    def handle_oauth_callback_request(self, connection, request):
-        """
-        Called by the api in the OAuth callback route. The request should contain the
-        authorization code
-        """
-        raise NotImplementedError
