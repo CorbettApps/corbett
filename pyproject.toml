@@ -3,7 +3,7 @@ requires = ["setuptools", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "corbett_cli"
+name = "corbett"
 authors = [
     {name = "Tom Corbett", email = "tom.corbettco@gmail.com"},
 ]
@@ -24,7 +24,7 @@ dependencies = [
     "pynamodb==5.4.1",
     "argon2-cffi==21.2.0"
 ]
-dynamic = ["version"]
+version = "0.1.0rc0"
 
 [project.optional-dependencies]
 pdf = ["ReportLab>=1.2", "RXP"]
