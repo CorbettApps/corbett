@@ -2,7 +2,7 @@ from corbett import App
 from corbett import config
 from .snowflake import get_conn
 from .client import Client
-
+from .version import version
 
 
 create_database_template = """
@@ -28,7 +28,8 @@ returns {return_type}
 api_integration = {namespace}
 headers = (
     'corbett-user-id' = '{user_id}',
-    'corbett-app-id' = '{app_id}'
+    'corbett-app-id' = '{app_id}',
+    'corbett-version' = '{version}'
 )
 context_headers = (
     current_account
@@ -106,6 +107,7 @@ class Installer:
                 'host': config.execute_host,
                 'user_id': app_registration['user_id'],
                 'app_id': app_registration['app_id'],
+                'version': version,
                 'formatted_args': function.format_args(),
                 'return_type': function.return_type
             }))
