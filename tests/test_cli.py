@@ -11,6 +11,6 @@ def test_cli():
 
 def test_cli_version():
     runner = CliRunner()
-    resp = runner.invoke(cli, ['--version'])
+    resp = runner.invoke(cli, ["--version"])
     assert resp.exit_code == 0
     assert version in resp.output

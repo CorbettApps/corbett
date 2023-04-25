@@ -1,1 +1,1 @@
-from .app import DebuggerApp
+from .app import DebuggerApp  # noqa

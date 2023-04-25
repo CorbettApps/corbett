@@ -1,1 +1,1 @@
-from .app import App, AppMethod
+from .app import App, AppMethod  # noqa

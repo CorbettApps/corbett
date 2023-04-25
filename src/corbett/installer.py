@@ -53,7 +53,7 @@ class Installer:
         self.app = app
         self.verbose = verbose
         self.client = client
-    
+
     def get_app_registration(self):
         resp = self.client.register_app(app_type=self.app.name)
         if not resp.ok:
@@ -61,33 +61,44 @@ class Installer:
         return resp.json()
 
     def get_create_database_statement(self):
-        return InstallationStatement(template=create_database_template, params={
-            'namespace': config.snowflake_namespace,
-        })
-    
+        return InstallationStatement(
+            template=create_database_template,
+            params={
+                "namespace": config.snowflake_namespace,
+            },
+        )
+
     def get_create_api_integration_statement(self):
         resp = self.client.api_key()
         if not resp.ok:
             raise Exception(f"Error retrieving api key: {resp.json()}")
         else:
-            api_key = resp.json()['api_key_value']
-        return InstallationStatement(template=create_api_integration_template, params={
-            'api_aws_role_arn': config.api_aws_role_arn,
-            'execute_host': config.execute_host,
-            'namespace': config.snowflake_namespace,
-            'api_key': api_key
-        })
-    
+            api_key = resp.json()["api_key_value"]
+        return InstallationStatement(
+            template=create_api_integration_template,
+            params={
+                "api_aws_role_arn": config.api_aws_role_arn,
+                "execute_host": config.execute_host,
+                "namespace": config.snowflake_namespace,
+                "api_key": api_key,
+            },
+        )
+
     def get_create_app_schema_statemnt(self):
-        return InstallationStatement(template=create_app_schema_template, params={
-            'app_name': self.app.name,
-            'namespace': config.snowflake_namespace,
-        })
+        return InstallationStatement(
+            template=create_app_schema_template,
+            params={
+                "app_name": self.app.name,
+                "namespace": config.snowflake_namespace,
+            },
+        )
 
     def run(self, dry_run=True):
         app_registration = self.get_app_registration()
         try:
-            self.app.handle_create_response(client=self.client, response=app_registration)
+            self.app.handle_create_response(
+                client=self.client, response=app_registration
+            )
         except NotImplementedError:
             pass
 
@@ -100,23 +111,33 @@ class Installer:
         ]
 
         for function_name, function in self.app.functions.items():
-            stmts.append(InstallationStatement(template=create_app_method_template, params={
-                'app_method': function_name,
-                'app_name': self.app.name,
-                'namespace': config.snowflake_namespace,
-                'host': config.execute_host,
-                'user_id': app_registration['user_id'],
-                'app_id': app_registration['app_id'],
-                'version': version,
-                'formatted_args': function.format_args(),
-                'return_type': function.return_type
-            }))
-        
+            stmts.append(
+                InstallationStatement(
+                    template=create_app_method_template,
+                    params={
+                        "app_method": function_name,
+                        "app_name": self.app.name,
+                        "namespace": config.snowflake_namespace,
+                        "host": config.execute_host,
+                        "user_id": app_registration["user_id"],
+                        "app_id": app_registration["app_id"],
+                        "version": version,
+                        "formatted_args": function.format_args(),
+                        "return_type": function.return_type,
+                    },
+                )
+            )
+
         for extra_name, extra_template in self.app.extras.items():
-            stmts.append(InstallationStatement(template=extra_template, params={
-                'app_name': self.app.name,
-                'namespace': config.snowflake_namespace
-            }))
+            stmts.append(
+                InstallationStatement(
+                    template=extra_template,
+                    params={
+                        "app_name": self.app.name,
+                        "namespace": config.snowflake_namespace,
+                    },
+                )
+            )
 
         for stmt in stmts:
             command = stmt.render()

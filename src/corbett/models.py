@@ -19,20 +19,16 @@ class Connection(DynamoModel):
 
     def to_dict(self):
         return {
-            'user_id': str(self.user_id),
-            'app_id': str(self.app_id),
-            'app_type': self.app_type,
-            'created_at': self.created_at,
-            'credentials': self.credentials_encrypted is not None
+            "user_id": str(self.user_id),
+            "app_id": str(self.app_id),
+            "app_type": self.app_type,
+            "created_at": self.created_at,
+            "credentials": self.credentials_encrypted is not None,
         }
 
     def check_api_key(self, api_key):
         pwhasher = PasswordHasher(
-            time_cost=1,
-            memory_cost=8,
-            parallelism=1,
-            salt_len=8,
-            hash_len=32
+            time_cost=1, memory_cost=8, parallelism=1, salt_len=8, hash_len=32
         )
         try:
             pwhasher.verify(self.api_key_hash, api_key)

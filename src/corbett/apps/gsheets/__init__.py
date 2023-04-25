@@ -1,1 +1,1 @@
-from .app import GsheetsApp
+from .app import GsheetsApp  # noqa
