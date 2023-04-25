@@ -24,7 +24,7 @@ dependencies = [
     "pynamodb==5.4.1",
     "argon2-cffi==21.2.0"
 ]
-version = "0.1.0rc0"
+version = "0.1.0"
 
 [project.optional-dependencies]
 pdf = ["ReportLab>=1.2", "RXP"]
