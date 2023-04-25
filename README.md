@@ -5,15 +5,15 @@ _Query your Google Sheets data from Snowflake_
 ```sql
 select *
 from table(corbett.gsheets.sheet(
-    '1Z2UhfwolBynRNc807n5OmLs2cYT6Nrf2h0kPI3LSRg8',  -- The spreadsheet ID
-    'A1:B6', -- The range of cells to query,
-    30 -- The number of rows to include
+    '1Z2Uhf...',  -- The spreadsheet ID
+    'A1:B6',      -- The range of cells to query,
+    30            -- The number of rows to include
 ))
 ```
 
-Corbett provides a Snowflake [external function]() that enables querying data from a Google Sheet directly from Snowflake.
+Corbett provides a Snowflake [external function](https://docs.snowflake.com/en/sql-reference/external-functions-introduction#what-is-an-external-function) that enables directly querying data from a Google Sheet.
 
-The data is loaded in real time, so updates to the sheet are immediately reflected the next time you run the query.
+The data from the Spreadsheet is queried in real time, so updates to the sheet are immediately reflected the next time the query is ran.
 
 ## Install
 
@@ -46,4 +46,4 @@ corbett install gsheets
 
 ## Requesting help
 
-Please open an issue in this repository if you run into an problems installing or using the function.
+Please open an issue in this repository if you run into any problems installing or using the function.
