@@ -10,6 +10,7 @@ from .apps.gsheets import GsheetsApp
 from .snowflake import get_conn
 from .client import Client
 from .installer import Installer
+from .version import version
 
 
 load_dotenv()
@@ -38,7 +39,13 @@ available_apps = [
     GsheetsApp()
 ]
 
-cli = Group('Corbett')
+
+@click.group
+@click.version_option(version)
+def cli():
+    pass
+
+
 apps = Group('apps', help="List available and installed apps")
 
 
@@ -67,6 +74,7 @@ def registered_apps():
 
 
 cli.add_command(apps)
+
 
 @cli.command()
 @option("--email", prompt=True)
