@@ -13,7 +13,7 @@ from table(corbett.gsheets.sheet(
 
 Corbett provides a Snowflake [external function]() that enables querying data from a Google Sheet directly from Snowflake.
 
-The data is loaded in real time, so updates to the sheet are immediately reflected the next time.
+The data is loaded in real time, so updates to the sheet are immediately reflected the next time you run the query.
 
 ## Install
 
